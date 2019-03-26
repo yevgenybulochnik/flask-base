@@ -50,12 +50,16 @@ def create_app(config=Config):
         if type == 'js':
             asset_key = '/'.join([bp, asset_name, f'{asset_name}.js'])
             asset_hash = manifest.get(asset_key)
-            return f'<script src="static/assets/{asset_hash}"></script>'
+            return f'<script src="{asset_hash}"></script>'
         if type == 'css':
             asset_key = '/'.join([bp, asset_name, f'{asset_name}.css'])
             asset_hash = manifest.get(asset_key)
-            return f'<link rel="stylesheet" href="static/assets/{asset_hash}">'
+            return f'<link rel="stylesheet" href="{asset_hash}">'
 
     app.add_template_global(include_asset)
+
+    @app.route('/sw.js')
+    def sw():
+        return app.send_static_file('assets/sw.js')
 
     return app
