@@ -53,7 +53,8 @@ module.exports = env => {
       }),
       new WorkboxPlugin.InjectManifest({
         swSrc: path.join(__dirname, '..', 'wp_config', 'sw.js'),
-        swDest: path.join(__dirname, '..', 'app', 'static', 'assets', 'sw.js')
+        swDest: path.join(__dirname, '..', 'app', 'static', 'assets', 'sw.js'),
+        importWorkboxFrom: 'local',
       })
     ],
     devServer: {

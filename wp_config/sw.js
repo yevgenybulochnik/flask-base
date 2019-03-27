@@ -1,9 +1,9 @@
 workbox.core.skipWaiting();
 workbox.core.clientsClaim();
 
-workbox.precaching.precacheAndRoute([
-  '/',
-  '/login'
-])
+workbox.routing.registerRoute(
+  '/login',
+  new workbox.strategies.NetworkFirst()
+)
 
 workbox.precaching.precacheAndRoute(self.__precacheManifest);

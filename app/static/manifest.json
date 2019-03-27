@@ -1,0 +1,14 @@
+{
+    "short_name": "F-B",
+    "name": "Flask-Base",
+    "icons": [
+        {
+            "src": "/static/icon.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ],
+    "start_url": "/",
+    "display": "fullscreen",
+    "scope": "/"
+}
