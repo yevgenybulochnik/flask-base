@@ -4,23 +4,42 @@
   {% block meta %}{% endblock %}
   <title>{% block title %}{{title|default}}{% endblock %}</title>
   {% block styles %}{% endblock %}
-  <link rel="manifest" href="/static/manifest.json">
+  {% if config['SERVICE_WORKER']  %}
+    <link rel="manifest" href="/static/manifest.json">
+  {% endif %}
 </head>
 <body>
   {% block navbar %}{% endblock %}
   {% block app_content %}{% endblock %}
 
   {% block scripts %}{% endblock %}
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope)
-        }, function(err) {
-          console.log('ServiceWorker registration failed: ', err)
+  {% if config['SERVICE_WORKER']  %}
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope)
+          }, function(err) {
+            console.log('ServiceWorker registration failed: ', err)
+          })
         })
-      })
-    }
-  </script>
+      }
+    </script>
+  {% else %}
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations){
+          for (let registration of registrations) {
+            registration.unregister()
+          }
+          caches.keys().then(function(names) {
+            for (let cacheName  of names ) {
+              caches.delete(cacheName)
+            }
+          })
+        })
+      }
+    </script>
+  {% endif %}
 </body>
 </html>
