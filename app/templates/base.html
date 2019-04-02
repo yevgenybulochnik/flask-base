@@ -4,7 +4,7 @@
   {% block meta %}{% endblock %}
   <title>{% block title %}{{title|default}}{% endblock %}</title>
   {% block styles %}{% endblock %}
-  {% if config['SERVICE_WORKER']  %}
+  {% if config['SERVICE_WORKER'] == 'present'  %}
     <link rel="manifest" href="/static/manifest.json">
   {% endif %}
 </head>
@@ -13,7 +13,7 @@
   {% block app_content %}{% endblock %}
 
   {% block scripts %}{% endblock %}
-  {% if config['SERVICE_WORKER']  %}
+  {% if config['SERVICE_WORKER'] == 'present'  %}
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
